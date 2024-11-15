@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Login from "./Components/Login";
+import AdminPanel from "./Components/AdminPanel";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={isAuthenticated ? <Navigate to="/admin" /> : <Login setAuth={setIsAuthenticated} />} />
+        <Route path="/admin" element={isAuthenticated ? <AdminPanel /> : <Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 }
 
